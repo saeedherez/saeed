@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Love mass💌</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&family=Tajawal:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            font-family: "Tajawal", "Segoe UI", Tahoma, sans-serif;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+            color: #fff
+        }
+
+        body {
+            background: linear-gradient(180deg, #070a24 0%, #1b1040 42%, #4a1450 74%, #8a2350 100%)
+        }
+
+        #sky {
+            position: fixed;
+            inset: 0;
+            z-index: 0
+        }
+
+        #moon {
+            position: fixed;
+            top: 9%;
+            right: 10%;
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            z-index: 0;
+            background: radial-gradient(circle at 35% 32%, #fffdf0, #f6e7b4 55%, #d8c28a);
+            box-shadow: 0 0 50px 14px rgba(255, 238, 190, .35);
+            will-change: transform
+        }
+
+        #moon:after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(190, 170, 120, .35);
+            top: 30px;
+            left: 44px;
+            box-shadow: -22px 18px 0 -3px rgba(190, 170, 120, .3), 12px 26px 0 -5px rgba(190, 170, 120, .3)
+        }
+
+        #lock {
+            justify-content: flex-start;
+            overflow-y: auto
+        }
+
+        #lock>div {
+            margin: auto 0
+        }
+
+        .poem {
+            margin: 14px 0
+        }
+
+        .poem h2 {
+            font-family: "Aref Ruqaa", serif;
+            font-size: 22px;
+            margin-bottom: 10px;
+            font-weight: 700
+        }
+
+        #poemBtn {
+            width: 100%;
+            padding: 14px;
+            font-size: 17px;
+            background: linear-gradient(135deg, #ffe6a7, #ffc2d1)
+        }
+
+        #poemTxt {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 1.2s ease;
+            font-family: "Aref Ruqaa", serif;
+            font-size: 21px;
+            line-height: 2.2
+        }
+
+        #poemTxt.on {
+            max-height: 55vh;
+            overflow-y: auto;
+            margin-top: 10px
+        }
+
+        #poemTxt span {
+            display: block;
+            opacity: 0;
+            animation: up .9s forwards
+        }
+
+        #tint {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            transition: background 1.2s
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            opacity: .5
+        }
+
+        .o1 {
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, #ff758f, transparent 70%);
+            top: -80px;
+            right: -60px
+        }
+
+        .o2 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #ffb3c1, transparent 70%);
+            bottom: -60px;
+            left: -60px
+        }
+
+        canvas#c {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none
+        }
+
+        .screen {
+            position: fixed;
+            inset: 0;
+            z-index: 2;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            overflow: hidden
+        }
+
+        .screen.on {
+            display: flex
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 16px;
+            padding: 11px 16px;
+            font-size: 15px;
+            font-weight: 700;
+            background: #fff;
+            color: #c9184a;
+            transition: transform .15s;
+            box-shadow: 0 6px 18px rgba(90, 0, 20, .25)
+        }
+
+        button:active {
+            transform: scale(.93)
+        }
+
+        button.g {
+            background: rgba(255, 255, 255, .2);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .5);
+            border: 1px solid rgba(255, 255, 255, .45);
+            border-radius: 30px;
+            padding: 24px;
+            max-width: 430px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(90, 0, 20, .4)
+        }
+
+        /* ظرف */
+        .env {
+            position: relative;
+            width: min(80vw, 300px);
+            height: 190px;
+            margin: 0 auto 14px;
+            perspective: 700px;
+            animation: fw 4s ease-in-out infinite
+        }
+
+        @keyframes fw {
+            50% {
+                transform: translateY(-8px)
+            }
+        }
+
+        .env>div {
+            position: absolute;
+            inset: 0;
+            border-radius: 10px
+        }
+
+        .bk {
+            background: linear-gradient(#ffd6de, #ffb3c1);
+            box-shadow: 0 20px 40px rgba(70, 0, 15, .4)
+        }
+
+        .ft {
+            background: #ff9fb3;
+            clip-path: polygon(0 100%, 50% 38%, 100% 100%)
+        }
+
+        .fl {
+            height: 62% !important;
+            bottom: auto;
+            background: linear-gradient(#ffc2cf, #ff8fa8);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top;
+            transition: transform .8s;
+            z-index: 3;
+            border-radius: 0 !important
+        }
+
+        .seal {
+            inset: auto !important;
+            left: 50%;
+            top: 44%;
+            transform: translate(-50%, -50%);
+            width: 58px;
+            height: 58px;
+            border-radius: 50% !important;
+            background: radial-gradient(circle at 35% 30%, #ff4d6d, #7a0620);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            z-index: 4;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .4);
+            animation: hb 1.3s infinite
+        }
+
+        @keyframes hb {
+            50% {
+                transform: translate(-50%, -50%) scale(1.15)
+            }
+        }
+
+        .env.open .fl {
+            transform: rotateX(180deg);
+            z-index: 1
+        }
+
+        .env.open .seal {
+            animation: crack .7s forwards
+        }
+
+        @keyframes crack {
+            to {
+                transform: translate(-50%, -50%) scale(1.8) rotate(25deg);
+                opacity: 0
+            }
+        }
+
+        .dots4 {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 6px 0 12px
+        }
+
+        .dots4 i {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            transition: .2s
+        }
+
+        .dots4 i.f {
+            background: #fff;
+            box-shadow: 0 0 12px #fff;
+            transform: scale(1.2)
+        }
+
+        .keys {
+            display: grid;
+            grid-template-columns: repeat(3, 66px);
+            gap: 10px;
+            justify-content: center
+        }
+
+        .keys button {
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            padding: 0;
+            font-size: 24px;
+            background: rgba(255, 255, 255, .2);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .5);
+            font-size: 14px;
+            margin-bottom: 4px
+        }
+
+        /* الرسالة */
+        #paper h1 {
+            font-family: "Aref Ruqaa", serif;
+            font-size: 32px;
+            margin: 2px 0 10px
+        }
+
+        #paper .t span {
+            display: block;
+            font-size: 18px;
+            line-height: 2;
+            opacity: 0;
+            animation: up .8s forwards
+        }
+
+        @keyframes up {
+            from {
+                opacity: 0;
+                transform: translateY(14px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        #nm {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%
+        }
+
+        .cnt {
+            margin: 12px 0;
+            padding: 10px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .18);
+            font-size: 16px
+        }
+
+        .cnt b {
+            font-size: 30px;
+            display: block;
+            font-family: "Aref Ruqaa"
+        }
+
+        /* المعرض */
+        .gal {
+            justify-content: flex-start
+        }
+
+        .bar {
+            display: flex;
+            gap: 7px;
+            justify-content: center;
+            flex-wrap: nowrap;
+            position: relative;
+            z-index: 6;
+            width: 100%;
+            padding-top: max(6px, env(safe-area-inset-top));
+            pointer-events: none
+        }
+
+        .bar button {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            border-radius: 50%;
+            font-size: 18px;
+            flex: none
+        }
+
+        .own {
+            display: none !important
+        }
+
+        body.owner .own:not([hidden]) {
+            display: flex !important
+        }
+
+        #sec {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 64px;
+            height: 50px;
+            z-index: 5
+        }
+
+        #tip {
+            font-size: 12px;
+            opacity: .85;
+            margin: 2px 0 8px;
+            transition: opacity 1s;
+            text-align: center
+        }
+
+        .mid {
+            text-align: center
+        }
+
+        #ctr {
+            font-size: 13px;
+            opacity: .9;
+            margin-bottom: 5px
+        }
+
+        .fr img {
+            animation: kb 9s ease-in-out infinite alternate
+        }
+
+        @keyframes kb {
+            to {
+                transform: scale(1.08)
+            }
+        }
+
+        .card.act .fr {
+            box-shadow: 0 14px 28px rgba(70, 0, 15, .45), 0 0 0 1px rgba(255, 255, 255, .6), 0 0 44px rgba(255, 205, 220, .5)
+        }
+
+        #paper h1 {
+            background: linear-gradient(90deg, #fff, #ffd3df, #fff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent
+        }
+
+        .stage {
+            position: relative;
+            width: 100%;
+            max-width: 980px;
+            flex: 1 1 0;
+            min-height: 0;
+            max-height: 640px;
+            margin: 6px 0;
+            perspective: 1200px;
+            direction: ltr;
+            touch-action: pan-y;
+            user-select: none
+        }
+
+        .card {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: min(90%, 440px);
+            max-width: 76vw;
+            aspect-ratio: 3/4;
+            transition: transform .7s cubic-bezier(.2, .9, .25, 1), opacity .6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            will-change: transform
+        }
+
+        .tilt {
+            position: absolute;
+            inset: 0;
+            transform-style: preserve-3d;
+            transform: rotateX(var(--rx, 0deg)) rotateY(calc(var(--ry, 0deg) + var(--fl, 0deg)));
+            transition: transform .55s cubic-bezier(.2, .9, .25, 1)
+        }
+
+        .card.fl .tilt {
+            --fl: 180deg
+        }
+
+        .face {
+            position: absolute;
+            inset: 0;
+            border-radius: 28px;
+            overflow: hidden;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            box-shadow: 0 14px 28px rgba(70, 0, 15, .45), 0 0 0 1px rgba(255, 255, 255, .5)
+        }
+
+        .face img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none
+        }
+
+        .cap {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px 14px 14px;
+            background: linear-gradient(transparent, rgba(60, 0, 15, .8));
+            text-align: center;
+            font-size: 19px;
+            direction: rtl
+        }
+
+        .cap:empty {
+            display: none
+        }
+
+        .dt {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, .85);
+            color: #c9184a;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            direction: rtl
+        }
+
+        .dt:empty {
+            display: none
+        }
+
+        .glare {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--gx, 50%) var(--gy, 0%), rgba(255, 255, 255, .4), transparent 55%);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none
+        }
+
+        .card.act .glare {
+            opacity: 1
+        }
+
+        .card.act .fr {
+            animation: pop .6s
+        }
+
+        @keyframes pop {
+            from {
+                opacity: .55
+            }
+        }
+
+        .bkf {
+            transform: rotateY(180deg);
+            background: linear-gradient(145deg, #ff4d6d, #9d0208);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 26px;
+            text-align: center;
+            direction: rtl;
+            font-family: "Aref Ruqaa", serif;
+            font-size: 24px;
+            line-height: 1.9;
+            border: 2px solid rgba(255, 255, 255, .6)
+        }
+
+        .bkf:before {
+            content: "💗";
+            position: absolute;
+            top: 14px;
+            font-size: 26px
+        }
+
+        .hint {
+            position: absolute;
+            bottom: 6px;
+            font-size: 11px;
+            opacity: .7;
+            font-family: Tajawal
+        }
+
+        .empty {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            font-size: 52px;
+            padding: 0;
+            animation: gl 2s infinite
+        }
+
+        .empty[hidden] {
+            display: none
+        }
+
+        @keyframes gl {
+            70% {
+                box-shadow: 0 0 0 30px rgba(255, 255, 255, 0)
+            }
+
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, .7)
+            }
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: max(12px, env(safe-area-inset-bottom));
+            position: relative;
+            z-index: 6
+        }
+
+        .nav button {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            padding: 0;
+            font-size: 22px
+        }
+
+        .dots {
+            display: flex;
+            gap: 7px;
+            max-width: 170px;
+            flex-wrap: wrap;
+            justify-content: center;
+            direction: ltr
+        }
+
+        .dots i {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .45);
+            cursor: pointer;
+            transition: .3s
+        }
+
+        .dots i.a {
+            background: #fff;
+            transform: scale(1.5);
+            box-shadow: 0 0 10px #fff
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            background: rgba(40, 0, 10, .6);
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto
+        }
+
+        .modal.on {
+            display: flex
+        }
+
+        .box {
+            background: linear-gradient(145deg, #ff4d6d, #c9184a);
+            border: 1px solid rgba(255, 255, 255, .4);
+            border-radius: 26px;
+            padding: 20px;
+            max-width: 420px;
+            width: 100%;
+            margin: auto
+        }
+
+        .box h3 {
+            margin: 0 0 8px;
+            font-size: 17px
+        }
+
+        .box input,
+        .box textarea {
+            width: 100%;
+            padding: 11px;
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            margin-bottom: 8px;
+            background: #fff;
+            color: #8a0a25;
+            outline: none;
+            text-align: right
+        }
+
+        .box textarea {
+            min-height: 70px;
+            resize: vertical
+        }
+
+        .row {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin-bottom: 6px
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, .3);
+            margin: 14px 0
+        }
+
+        #fin {
+            z-index: 15;
+            background: rgba(60, 0, 15, .25)
+        }
+
+        #fin h2 {
+            font-family: "Aref Ruqaa", serif;
+            font-size: 40px;
+            margin-bottom: 14px
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            color: #c9184a;
+            padding: 10px 18px;
+            border-radius: 30px;
+            z-index: 30;
+            display: none;
+            font-weight: 700;
+            max-width: 90%;
+            text-align: center
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="sky"></canvas>
+    <div id="moon"></div>
+    <div id="tint"></div>
+    <canvas id="c"></canvas>
+
+    <div class="screen on" id="lock">
+        <div id="lk" style="text-align:center">
+            <div class="env" id="env">
+                <div class="bk"></div>
+                <div class="ft"></div>
+                <div class="fl"></div>
+                <div class="seal">💗</div>
+            </div>
+            <div class="dots4" id="d4"><i></i><i></i><i></i><i></i></div>
+            <div class="err" id="err">اكتب كلمة السر لتفتح الظرف</div>
+            <div class="keys" id="keys"></div>
+        </div>
+        <div class="glass" id="paper" style="display:none">
+            <canvas id="nm"></canvas>
+            <h1 id="lTitle"></h1>
+            <div class="t" id="lText"></div>
+            <div class="poem" id="poemBox">
+                <h2 id="poemH"></h2><button id="poemBtn">اضغط للفتح 💌</button>
+                <div id="poemTxt"></div>
+            </div>
+            <div class="cnt" id="cnt" style="display:none">مرّ علينا<b id="days">0</b>يوم من الحب 💞</div>
+            <button id="go" style="width:100%;padding:14px;font-size:17px">افتح الصور 💖</button>
+        </div>
+    </div>
+
+    <div class="screen gal" id="gal">
+        <div class="bar">
+            <button id="add" class="own" title="إضافة صورة">➕</button><button id="edit" class="g own"
+                title="تعديل">✏️</button>
+            <button id="share" class="g own" title="نسخ رابط جديد">🔗</button><button id="save" class="g own"
+                title="تنزيل نسخة">💾</button>
+            <button id="play" class="g" title="عرض تلقائي">▶</button><button id="mus" class="g"
+                title="الموسيقى">🎵</button><button id="rst" class="g" title="إعادة من البداية">🔄</button>
+        </div>
+        <div class="stage" id="stage"><button class="empty own" id="empty" hidden>➕</button></div>
+        <div id="tip">اسحب للتقليب • اضغط على الصورة لتنقلب 💗</div>
+        <div class="nav"><button id="next">❯</button>
+            <div class="mid">
+                <div id="ctr"></div>
+                <div class="dots" id="dots"></div>
+            </div><button id="prev">❮</button>
+        </div>
+        <input type="file" id="file" accept="image/*" multiple hidden>
+    </div>
+
+    <div class="screen" id="fin">
+        <div class="glass">
+            <h2 id="endT"></h2><button id="finX">رجوع للصور</button>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="box">
+            <h3>✏️ البطاقة الحالية</h3>
+            <input id="capIn" placeholder="كلمة تحت الصورة"><input id="dateIn"
+                placeholder="تاريخ أو عنوان (مثال: أول لقاء)">
+            <textarea id="backIn" placeholder="رسالة على ظهر البطاقة (اضغط البطاقة لتنقلب)"></textarea>
+            <div class="row"><button id="saveCap">حفظ</button><button id="chg" class="g">تغيير الصورة</button><button
+                    id="del" class="g">🗑 حذف</button><button id="mvL" class="g">⬅</button><button id="mvR"
+                    class="g">➡</button></div>
+            <hr>
+            <h3>💌 الرسالة والمفاجأة</h3>
+            <input id="titleIn" placeholder="العنوان"><textarea id="textIn"></textarea>
+            <input id="nameIn" placeholder="اسمها (القلوب تتشكّل على شكله) 💖"><input id="sinceIn" type="date"><input
+                id="poemTIn" placeholder="عنوان الشعر (مثال: كتبتُ لكِ أبياتاً خصيصاً لكِ)"><textarea id="poemIn"
+                placeholder="اكتب هنا الأبيات، كل بيت في سطر" style="min-height:140px"></textarea><input id="endIn"
+                placeholder="جملة الختام">
+            <div class="row"><button id="saveL">حفظ</button><button id="close" class="g">إغلاق</button></div>
+        </div>
+    </div>
+    <div class="toast" id="toast"></div>
+
+    <script id="baked">window.BAKED = null;</script>
+    <script>
+        const SRC = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+        const PASS = "0000", EDIT = "1111", $ = id => document.getElementById(id);
+        const DEFPOEM = "يا قمراً في ليلي أضاء\nوعمراً بحضوركِ يزداد بهاء\nكلُّ الكلام يضيقُ عن وصفكِ\nوقلبي لكِ وحدكِ هوىً ووفاء";
+        let data = { title: "إلى من أحب", text: "في كل يوم أكتشف سبباً جديداً لأحبك أكثر.\nهذه الرسالة صغيرة، لكن قلبي فيها كبير.", name: "", since: "", poemT: "", poem: "", end: "وهذا مجرد البداية 💍", cards: [], ts: 0 };
+        let idx = 0, rep = false, show = null;
+
+        /* حفظ */
+        const b64u = b => { let s = ""; b.forEach(x => s += String.fromCharCode(x)); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "") };
+        const unb = s => Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0));
+        async function enc(o) {
+            const r = new TextEncoder().encode(JSON.stringify(o));
+            if (window.CompressionStream) return "z" + b64u(new Uint8Array(await new Response(new Blob([r]).stream().pipeThrough(new CompressionStream("gzip"))).arrayBuffer()));
+            return "p" + b64u(r)
+        }
+        async function dec(s) {
+            const b = unb(s.slice(1));
+            if (s[0] == "z") return JSON.parse(await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream("gzip"))).text());
+            return JSON.parse(new TextDecoder().decode(b))
+        }
+        function saveL() { data.ts = Date.now(); if (location.hash) history.replaceState(null, "", location.pathname + location.search); try { localStorage.setItem("loveData3", JSON.stringify(data)) } catch (e) { toast("الذاكرة ممتلئة، استخدم 💾") } }
+        async function load() {
+            try { const m = location.hash.match(/^#d=(.+)$/); if (m) { data = await dec(m[1]); return } } catch (e) { }
+            let l = null; try { l = JSON.parse(localStorage.getItem("loveData3")) } catch (e) { }
+            const b = window.BAKED; if (b && (!l || (l.ts || 0) < (b.ts || 0))) data = b; else if (l) data = l;
+        }
+        function toast(m) { const t = $("toast"); t.textContent = m; t.style.display = "block"; clearTimeout(t._t); t._t = setTimeout(() => t.style.display = "none", 3000) }
+
+        /* لوحة الأرقام */
+        let code = "";
+        "123456789⌫0✓".split("").forEach(k => { const b = document.createElement("button"); b.textContent = k; if (k == "✓") b.style.visibility = "hidden"; b.onclick = () => press(k); $("keys").appendChild(b) });
+        addEventListener("keydown", e => { if ($("lock").classList.contains("on") && $("lk").style.display != "none") { if (/^\d$/.test(e.key)) press(e.key); if (e.key == "Backspace") press("⌫") } });
+        function press(k) {
+            if (code.length >= 4 && k != "⌫") return;
+            code = k == "⌫" ? code.slice(0, -1) : code + k;
+            [...$("d4").children].forEach((d, i) => d.classList.toggle("f", i < code.length));
+            if (AC && !muted && k != "⌫") tone(N(72 + (+k)), AC.currentTime, .5, .08, "sine");
+            if (code.length == 4) setTimeout(check, 150);
+        }
+        function check() {
+            if (code == PASS) {
+                $("env").classList.add("open"); burst(innerWidth / 2, innerHeight / 3, 40); $("err").textContent = "💖";
+                setTimeout(() => { $("lk").style.display = "none"; const sh = () => { $("paper").style.display = "block"; $("paper").style.animation = "up .8s"; letter() }; data.name ? nameHearts(sh) : sh() }, 1100);
+            } else {
+                $("err").textContent = "كلمة السر غير صحيحة 💔"; const e = $("lk"); e.classList.remove("shake"); void e.offsetWidth; e.classList.add("shake");
+                code = ""; setTimeout(() => [...$("d4").children].forEach(d => d.classList.remove("f")), 400);
+            }
+        }
+        function letter() {
+            $("lTitle").textContent = data.title; const t = $("lText"); t.innerHTML = "";
+            data.text.split("\n").forEach((l, i) => { const s = document.createElement("span"); s.textContent = l; s.style.animationDelay = (.3 + i * .6) + "s"; t.appendChild(s) });
+            poemInit();
+            if (data.since) { const n = Math.max(0, Math.floor((Date.now() - new Date(data.since)) / 864e5)); $("cnt").style.display = "block"; let k = 0; const iv = setInterval(() => { k = Math.min(n, k + Math.ceil(n / 60)); $("days").textContent = k; if (k >= n) clearInterval(iv) }, 25) }
+            else $("cnt").style.display = "none";
+        }
+        $("go").onclick = () => { $("lock").classList.remove("on"); $("gal").classList.add("on"); render(); burst(innerWidth / 2, innerHeight / 2, 30) };
+        function poemInit() {
+            $("poemBox").style.display = "block";
+            $("poemH").textContent = data.poemT || "كتبتُ لكِ أبياتاً خصيصاً لكِ ✍️";
+            $("poemBtn").style.display = ""; $("poemTxt").className = ""; $("poemTxt").innerHTML = "";
+        }
+        $("poemBtn").onclick = () => {
+            const t = $("poemTxt"); t.innerHTML = "";
+            (data.poem && data.poem.trim() ? data.poem : DEFPOEM).split("\n").forEach((l, i) => { const s = document.createElement("span"); s.textContent = l || "\u00a0"; s.style.animationDelay = (.4 + i * .9) + "s"; t.appendChild(s) });
+            t.classList.add("on"); $("poemBtn").style.display = "none"; burst(innerWidth / 2, innerHeight / 2, 30); chime();
+        };
+        function stars() {
+            const c = $("nm"); if (!data.name) { c.style.display = "none"; return }
+            c.style.display = "block"; const w = c.width = 360, h = c.height = 100, x = c.getContext("2d"), o = document.createElement("canvas"); o.width = w; o.height = h;
+            const q = o.getContext("2d"); q.font = "700 60px 'Aref Ruqaa',serif"; q.textAlign = "center"; q.textBaseline = "middle"; q.fillText(data.name, w / 2, h / 2);
+            const px = q.getImageData(0, 0, w, h).data, P = [];
+            for (let j = 0; j < h; j += 4)for (let i = 0; i < w; i += 4)if (px[(j * w + i) * 4 + 3] > 128) P.push({ tx: i, ty: j, x: Math.random() * w, y: Math.random() * h, p: Math.random() * 6 });
+            (function f() {
+                x.clearRect(0, 0, w, h); x.fillStyle = "#fff"; for (const p of P) { p.x += (p.tx - p.x) * .05; p.y += (p.ty - p.y) * .05; p.p += .08; x.globalAlpha = .55 + .45 * Math.sin(p.p); x.beginPath(); x.arc(p.x, p.y, 1.7, 0, 7); x.fill() }
+                if ($("paper").style.display != "none" && $("lock").classList.contains("on")) requestAnimationFrame(f)
+            })();
+        }
+
+        /* البطاقات 3D */
+        function render() {
+            const st = $("stage"); st.querySelectorAll(".card").forEach(c => c.remove());
+            if (idx >= data.cards.length) idx = Math.max(0, data.cards.length - 1);
+            data.cards.forEach((c, i) => {
+                const d = document.createElement("div"); d.className = "card"; d.dataset.i = i;
+                d.innerHTML = '<div class="tilt"><div class="face fr"><img alt=""><div class="dt"></div><div class="cap"></div><div class="glare"></div></div><div class="face bkf"><span></span><div class="hint">اضغط للعودة</div></div></div>';
+                d.querySelector("img").src = c.img; d.querySelector(".dt").textContent = c.date || ""; d.querySelector(".cap").textContent = c.cap || "";
+                d.querySelector(".bkf span").textContent = c.back || c.cap || "أحبك 💗";
+                st.appendChild(d);
+            });
+            $("empty").hidden = data.cards.length > 0; layout(false);
+        }
+        function layout(fx) {
+            const n = data.cards.length;
+            document.querySelectorAll(".card").forEach(c => {
+                const i = +c.dataset.i; let o = i - idx; if (o > n / 2) o -= n; if (o < -n / 2) o += n; const a = Math.abs(o);
+                c.style.transform = `translate(-50%,-50%) translateX(${o * 58}%) translateZ(${-a * 170}px) rotateY(${-o * 36}deg) scale(${o ? .92 : 1})`;
+                c.style.opacity = a > 2 ? 0 : 1 - a * .22; c.style.zIndex = 20 - a; c.style.pointerEvents = a > 2 ? "none" : "auto";
+                c.classList.toggle("act", !o); if (o) c.classList.remove("fl");
+            });
+            $("dots").innerHTML = data.cards.map((_, k) => `<i class="${k == idx ? "a" : ""}" data-k="${k}"></i>`).join("");
+            $("ctr").textContent = n ? (idx + 1) + " / " + n : "";
+            tint();
+            if (fx && n) { const r = document.querySelector(".card.act")?.getBoundingClientRect(); if (r) burst(r.left + r.width / 2, r.top + r.height / 2, 8); chime() }
+        }
+        function tint() {
+            const im = document.querySelector(".card.act img"); if (!im) return;
+            const f = () => {
+                try {
+                    const c = document.createElement("canvas"); c.width = c.height = 1; const x = c.getContext("2d"); x.drawImage(im, 0, 0, 1, 1); const [r, g, b] = x.getImageData(0, 0, 1, 1).data;
+                    $("tint").style.background = `radial-gradient(circle at 50% 45%,rgba(${r},${g},${b},.6),transparent 75%)`
+                } catch (e) { }
+            };
+            im.complete ? f() : im.onload = f;
+        }
+        function go(i) { const n = data.cards.length; if (!n) return; idx = (i + n) % n; layout(true) }
+        function nextC() { const n = data.cards.length; if (n > 1 && idx == n - 1) finale(); else go(idx + 1) }
+        $("next").onclick = nextC; $("prev").onclick = () => go(idx - 1);
+        $("dots").onclick = e => { if (e.target.dataset.k) go(+e.target.dataset.k) };
+        $("empty").onclick = () => $("add").click();
+        addEventListener("keydown", e => { if (!$("gal").classList.contains("on") || $("modal").classList.contains("on")) return; if (e.key == "ArrowLeft") nextC(); if (e.key == "ArrowRight") go(idx - 1) });
+        let sx = null; const stg = $("stage");
+        stg.addEventListener("pointerdown", e => sx = e.clientX);
+        stg.addEventListener("pointerup", e => {
+            $("tip").style.opacity = 0;
+            if (sx === null) return; const dx = e.clientX - sx; sx = null;
+            if (Math.abs(dx) > 45) { stopShow(); dx < 0 ? nextC() : go(idx - 1); return }
+            const c = e.target.closest(".card"); if (!c) return;
+            if (+c.dataset.i == idx) { c.classList.toggle("fl"); chime() } else go(+c.dataset.i);
+        });
+        stg.addEventListener("pointermove", e => {
+            const c = document.querySelector(".card.act .tilt"); if (!c) return; const r = c.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+            c.style.setProperty("--ry", x * 20 + "deg"); c.style.setProperty("--rx", -y * 20 + "deg"); c.style.setProperty("--gx", (x + .5) * 100 + "%"); c.style.setProperty("--gy", (y + .5) * 100 + "%");
+        });
+        stg.addEventListener("pointerleave", () => { const c = document.querySelector(".card.act .tilt"); if (c) { c.style.setProperty("--rx", "0deg"); c.style.setProperty("--ry", "0deg") } });
+
+        /* إعادة من البداية */
+        $("rst").onclick = () => {
+            stopShow(); $("fin").classList.remove("on"); $("modal").classList.remove("on"); code = "";
+            [...$("d4").children].forEach(d => d.classList.remove("f")); $("env").classList.remove("open");
+            $("err").textContent = "اكتب كلمة السر لتفتح الظرف"; $("lk").style.display = ""; $("paper").style.display = "none";
+            $("gal").classList.remove("on"); $("lock").classList.add("on");
+        };
+        /* عرض تلقائي + ختام */
+        function stopShow() { if (show) { clearInterval(show); show = null; $("play").textContent = "▶" } }
+        $("play").onclick = () => {
+            if (show) return stopShow(); if (!data.cards.length) return;
+            $("play").textContent = "⏸"; idx = 0; layout(true); show = setInterval(nextC, 3800);
+        };
+        function finale() {
+            stopShow(); $("endT").textContent = data.end || "أحبك 💍"; $("fin").classList.add("on"); let n = 0;
+            const t = setInterval(() => { burst(Math.random() * innerWidth, Math.random() * innerHeight * .7, 16); chime(); if (++n > 16) clearInterval(t) }, 350);
+        }
+        $("finX").onclick = () => { $("fin").classList.remove("on"); go(0) };
+
+        /* إضافة وتعديل */
+        function shrink(f) {
+            return new Promise(res => {
+                const r = new FileReader(); r.onload = () => {
+                    const im = new Image(); im.onload = () => {
+                        const k = Math.min(1, 640 / Math.max(im.width, im.height)), c = document.createElement("canvas"); c.width = im.width * k; c.height = im.height * k;
+                        c.getContext("2d").drawImage(im, 0, 0, c.width, c.height); res(c.toDataURL("image/jpeg", .72))
+                    }; im.src = r.result
+                }; r.readAsDataURL(f)
+            })
+        }
+        $("add").onclick = () => { rep = false; $("file").click() };
+        $("chg").onclick = () => { rep = true; $("file").click() };
+        $("file").onchange = async e => {
+            for (const f of [...e.target.files]) {
+                const img = await shrink(f);
+                if (rep && data.cards[idx]) { data.cards[idx].img = img; rep = false } else { data.cards.push({ img, cap: "", back: "", date: "" }); idx = data.cards.length - 1 }
+            }
+            e.target.value = ""; saveL(); render(); layout(true); toast("تمت الإضافة ✅");
+        };
+        $("edit").onclick = () => {
+            stopShow(); const c = data.cards[idx] || {};
+            $("capIn").value = c.cap || ""; $("dateIn").value = c.date || ""; $("backIn").value = c.back || "";
+            $("titleIn").value = data.title; $("textIn").value = data.text; $("nameIn").value = data.name || ""; $("sinceIn").value = data.since || ""; $("poemTIn").value = data.poemT || ""; $("poemIn").value = data.poem && data.poem.trim() ? data.poem : DEFPOEM; $("endIn").value = data.end || "";
+            $("modal").classList.add("on")
+        };
+        $("close").onclick = () => $("modal").classList.remove("on");
+        $("saveCap").onclick = () => { const c = data.cards[idx]; if (!c) return; c.cap = $("capIn").value; c.date = $("dateIn").value; c.back = $("backIn").value; saveL(); render(); toast("تم الحفظ ✅") };
+        $("del").onclick = () => { if (data.cards[idx] && confirm("حذف هذه البطاقة؟")) { data.cards.splice(idx, 1); saveL(); render(); $("modal").classList.remove("on") } };
+        function mv(d) { const j = idx + d; if (!data.cards[idx] || j < 0 || j >= data.cards.length) return;[data.cards[idx], data.cards[j]] = [data.cards[j], data.cards[idx]]; idx = j; saveL(); render() }
+        $("mvL").onclick = () => mv(-1); $("mvR").onclick = () => mv(1);
+        $("saveL").onclick = () => { data.title = $("titleIn").value; data.text = $("textIn").value; data.name = $("nameIn").value; data.since = $("sinceIn").value; data.poemT = $("poemTIn").value; data.poem = $("poemIn").value; data.end = $("endIn").value; saveL(); toast("تم حفظ الرسالة ✅") };
+
+        /* رابط ونسخة */
+        function re(u, m, q) { return new Promise(r => { const i = new Image(); i.onload = () => { const k = Math.min(1, m / Math.max(i.width, i.height)), c = document.createElement("canvas"); c.width = i.width * k; c.height = i.height * k; c.getContext("2d").drawImage(i, 0, 0, c.width, c.height); r(c.toDataURL("image/jpeg", q)) }; i.onerror = () => r(u); i.src = u }) }
+        $("share").onclick = async () => {
+            toast("جاري تجهيز الرابط…"); const d = JSON.parse(JSON.stringify(data)); d.ts = Date.now();
+            for (const c of d.cards) if (c.img) c.img = await re(c.img, 420, .55);
+            const l = location.href.split("#")[0] + "#d=" + await enc(d);
+            try { await navigator.clipboard.writeText(l); toast(l.length > 8000 ? "تم النسخ ✅ لكن الرابط طويل (" + Math.round(l.length / 1000) + "K)، لو انقطع بالإرسال استخدم 💾" : "تم نسخ الرابط المعدّل 🔗") } catch (e) { prompt("انسخ الرابط:", l) }
+            history.replaceState(null, "", l)
+        };
+        $("save").onclick = () => {
+            data.ts = Date.now();
+            const h = SRC.replace(/<script id="baked">[\s\S]*?<\/script>/, () => '<script id="baked">window.BAKED=' + JSON.stringify(data).replace(/</g, "\\u003c") + ';<\/script>');
+            const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([h], { type: "text/html" })); a.download = "index.html"; a.click();
+            toast("تم تنزيل نسخة فيها صورك، ارفعها على الاستضافة 💾")
+        };
+
+        /* الموسيقى: 3 ألحان */
+        let AC, master, started = false, muted = false, step = 0, nextT = 0, tn = 0;
+        const N = m => 440 * Math.pow(2, (m - 69) / 12), M = [0, 4, 7, 12], m = [0, 3, 7, 12];
+        const TUNES = [
+            { bpm: 64, w: "triangle", p: [[48, M], [45, m], [41, M], [43, M]] },
+            { bpm: 50, w: "sine", p: [[45, m], [41, M], [48, M], [43, M]] },
+            { bpm: 72, w: "triangle", p: [[48, M], [43, M], [45, m], [40, m], [41, M], [48, M], [43, M], [48, M]] }
+        ];
+        function tone(f, t, d, v, ty) {
+            const o = AC.createOscillator(), g = AC.createGain(); o.type = ty; o.frequency.value = f;
+            g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .015); g.gain.exponentialRampToValueAtTime(.0001, t + d);
+            o.connect(g); g.connect(master); o.start(t); o.stop(t + d + .05)
+        }
+        function startAudio() {
+            if (started) return; started = true;
+            try {
+                AC = new (window.AudioContext || window.webkitAudioContext)();
+                const out = AC.createGain(); out.gain.value = .55; out.connect(AC.destination); master = AC.createGain(); master.connect(out);
+                const dl = AC.createDelay(), fb = AC.createGain(); dl.delayTime.value = .42; fb.gain.value = .38; master.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(out);
+                AC.resume(); nextT = AC.currentTime + .2;
+                setInterval(() => {
+                    const T = TUNES[tn % 3];
+                    while (nextT < AC.currentTime + .4) {
+                        const [r, iv] = T.p[Math.floor(step / 8) % T.p.length], s = step % 8, a = [0, 1, 2, 3, 2, 1, 2, 1][s], f = r + 12 + iv[a];
+                        tone(N(f), nextT, 1.4, .09, T.w); tone(N(f + 12), nextT, .6, .015, "sine");
+                        if (!s) tone(N(r), nextT, 3, .12, "sine");
+                        if ([0, 4, 6].includes(s) && Math.random() < .85) tone(N(r + 12 + iv[1 + Math.floor(Math.random() * 3)] + 12), nextT, 1.8, .065, "sine");
+                        nextT += 60 / T.bpm / 2; step++
+                    }
+                }, 120);
+            } catch (e) { }
+        }
+        ["pointerdown", "keydown", "touchstart"].forEach(v => addEventListener(v, startAudio, { once: true }));
+        function chime() { try { navigator.vibrate && navigator.vibrate(12) } catch (e) { } if (!AC || muted) return; tone(N([84, 86, 88, 91][Math.floor(Math.random() * 4)]), AC.currentTime, 1.1, .06, "sine") }
+        $("mus").onclick = () => {
+            tn = (tn + 1) % 4; muted = tn == 3; $("mus").textContent = muted ? "🔇" : "🎵"; toast(muted ? "الموسيقى متوقفة" : "لحن " + (tn + 1)); step = 0;
+            if (master) master.gain.setTargetAtTime(muted ? 0 : 1, AC.currentTime, .1);
+        };
+
+        /* القلوب والبتلات */
+        const sk = $("sky"), sx2 = sk.getContext("2d"); let ST = [], SH = [], tx = 0, ty = 0, px_ = 0, py_ = 0, lastS = 0;
+        for (let i = 0; i < 90; i++)ST.push({ x: Math.random(), y: Math.random(), r: Math.random() * 1.4 + .3, d: Math.random() * .8 + .2, p: Math.random() * 6 });
+        addEventListener("deviceorientation", e => { if (e.gamma == null) return; tx = Math.max(-1, Math.min(1, e.gamma / 30)); ty = Math.max(-1, Math.min(1, ((e.beta || 0) - 45) / 30)) });
+        addEventListener("pointerdown", () => { try { DeviceOrientationEvent.requestPermission && DeviceOrientationEvent.requestPermission().catch(() => { }) } catch (e) { } }, { once: true });
+        (function skyLoop(t) {
+            requestAnimationFrame(skyLoop); if (document.hidden || t - lastS < 33) return; lastS = t;
+            px_ += (tx - px_) * .08; py_ += (ty - py_) * .08;
+            const W = sk.width, H = sk.height; sx2.clearRect(0, 0, W, H); sx2.fillStyle = "#fff";
+            for (const s of ST) {
+                s.p += .05; sx2.globalAlpha = .35 + .65 * Math.abs(Math.sin(s.p));
+                const x = ((s.x * W - px_ * s.d * 30) % W + W) % W, y = s.y * H - py_ * s.d * 30; sx2.beginPath(); sx2.arc(x, y, s.r, 0, 7); sx2.fill()
+            }
+            if (Math.random() < .01 && SH.length < 2) SH.push({ x: Math.random() * W * .8 + W * .2, y: Math.random() * H * .4, l: 0 });
+            for (const m of SH) {
+                m.l++; m.x -= 14; m.y += 7; sx2.globalAlpha = Math.max(0, 1 - m.l / 40);
+                const g = sx2.createLinearGradient(m.x, m.y, m.x + 90, m.y - 45); g.addColorStop(0, "#fff"); g.addColorStop(1, "rgba(255,255,255,0)");
+                sx2.strokeStyle = g; sx2.lineWidth = 2; sx2.beginPath(); sx2.moveTo(m.x, m.y); sx2.lineTo(m.x + 90, m.y - 45); sx2.stroke()
+            }
+            SH = SH.filter(m => m.l < 40);
+            $("moon").style.transform = "translate(" + (-px_ * 26) + "px," + (-py_ * 18) + "px)";
+        })();
+        const SP = {}; function spr(e, z) { z = Math.round(z / 4) * 4; const k = e + z; if (SP[k]) return SP[k]; const c = document.createElement("canvas"); c.width = c.height = z * 1.5 | 0; const x = c.getContext("2d"); x.font = z + "px serif"; x.textAlign = "center"; x.textBaseline = "middle"; x.fillText(e, c.width / 2, c.height / 2); return SP[k] = { c, w: c.width } }
+        const cv = $("c"), cx = cv.getContext("2d"); let W, H, hs = [], ms = { x: -999, y: -999 };
+        const EM = ["❤️", "💖", "💗", "💕", "💘", "🩷", "💓"], PT = ["🌸", "🌹", "🌺"];
+        function size() { W = cv.width = sk.width = innerWidth; H = cv.height = sk.height = innerHeight } addEventListener("resize", size); size();
+        function mk(x, y, b, p) {
+            const a = Math.random() * 6.28, sp = b ? 2 + Math.random() * 5 : 0;
+            return {
+                x: x ?? Math.random() * W, y: y ?? (p ? -30 : H + 30), s: p ? 14 + Math.random() * 14 : 16 + Math.random() * 30, vx: b ? Math.cos(a) * sp : (Math.random() - .5) * .8,
+                vy: b ? Math.sin(a) * sp - 1 : p ? .6 + Math.random() : -(.4 + Math.random() * 1.2), e: (p ? PT : EM)[Math.floor(Math.random() * (p ? 3 : 7))], ph: Math.random() * 6, life: b ? 90 : 1e9, o: .45 + Math.random() * .5, p
+            }
+        }
+        function burst(x, y, n) { for (let i = 0; i < n; i++)hs.push(mk(x, y, true)) }
+        function nameHearts(cb) {
+            const w = W, h = H, o = document.createElement("canvas"); o.width = w; o.height = h; const q = o.getContext("2d");
+            const fs = Math.max(60, Math.min(w / (data.name.length * .55), h * .28, 220));
+            q.font = "700 " + fs + "px 'Aref Ruqaa',serif"; q.textAlign = "center"; q.textBaseline = "middle"; q.fillText(data.name, w / 2, h / 2);
+            const px = q.getImageData(0, 0, w, h).data; let g = Math.max(12, Math.round(fs / 6)), P = [];
+            for (; ;) { P = []; for (let y = 0; y < h; y += g)for (let x = 0; x < w; x += g)if (px[(y * w + x) * 4 + 3] > 128) P.push([x, y]); if (P.length <= 170) break; g += 2 }
+            P.forEach(([x, y]) => { const e = mk(Math.random() * w, Math.random() < .5 ? -30 : h + 30, false); e.life = 1e9; e.tx = x; e.ty = y; e.s = Math.max(14, g * 1.15); e.e = ["❤️", "💖", "💗", "💕"][Math.floor(Math.random() * 4)]; e.o = .95; e.fly = 1; hs.push(e) });
+            setTimeout(() => { hs.forEach(e => { if (e.fly) { e.fly = 0; e.life = 70; e.vy = -1 - Math.random() * 2; e.vx = (Math.random() - .5) * 3 } }); cb() }, 4500);
+        }
+        for (let i = 0; i < 22; i++)hs.push(mk(undefined, Math.random() * H));
+        let lt = 0; addEventListener("pointermove", e => {
+            ms.x = e.clientX; ms.y = e.clientY; tx = (e.clientX / W - .5) * 2; ty = (e.clientY / H - .5) * 2; const t = performance.now();
+            if (t - lt > 70 && hs.length < 60) { lt = t; const h = mk(e.clientX, e.clientY, true); h.e = "✨"; h.s = 14; h.life = 28; h.vx = (Math.random() - .5) * 1.5; h.vy = (Math.random() - .5) * 1.5; hs.push(h) }
+        });
+        addEventListener("pointerdown", e => { if (!e.target.closest("button,input,textarea,.modal,.stage")) burst(e.clientX, e.clientY, 10) });
+        (function tick() {
+            if (document.hidden) return requestAnimationFrame(tick);
+            cx.clearRect(0, 0, W, H);
+            if (hs.length < 42 && Math.random() < .08) hs.push(mk(undefined, undefined, false, Math.random() < .3));
+            hs = hs.filter(h => h.life > 0 && h.y > -60 && h.y < H + 60);
+            for (const h of hs) {
+                if (h.fly) { h.x += (h.tx - h.x) * .06; h.y += (h.ty - h.y) * .06; cx.globalAlpha = h.o; const z = spr(h.e, h.s); cx.drawImage(z.c, h.x - z.w / 2, h.y - z.w / 2); continue }
+                h.ph += .03; h.x += h.vx + Math.sin(h.ph) * .6; h.y += h.vy; h.life--;
+                const dx = h.x - ms.x, dy = h.y - ms.y, d = Math.hypot(dx, dy); if (d < 120 && d > 0) { h.x += dx / d * (120 - d) * .08; h.y += dy / d * (120 - d) * .08 }
+                if (h.life < 1e8) { h.vx *= .96; h.vy = h.vy * .96 - .02 }
+                cx.globalAlpha = h.life < 30 ? h.o * h.life / 30 : h.o; const q = spr(h.e, h.s); cx.drawImage(q.c, h.x - q.w / 2, h.y - q.w / 2);
+            }
+            requestAnimationFrame(tick);
+        })();
+        document.body.classList.add("owner");
+        load().then(() => { });
+    </script>
+</body>
+
+</html>
